@@ -1,0 +1,6 @@
+train: E:\School\R\Robocon\YOLOv8\datasets\images\train #训练集图片绝对路径
+val: E:\School\R\Robocon\YOLOv8\datasets\images\val #数据集绝对路径
+# number of classes
+nc: 2 #类别数
+# class names
+names: ['blue', 'red'] #类别名称
