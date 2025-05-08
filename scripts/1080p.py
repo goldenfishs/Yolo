@@ -3,7 +3,7 @@
 from PIL import Image
 import os
 
-def resize_to_1080p(image_path):
+def resize_and_convert_to_jpg(image_path):
     try:
         with Image.open(image_path) as img:
             # 获取图像的原始尺寸
@@ -12,8 +12,21 @@ def resize_to_1080p(image_path):
 
             # 等比例缩放图像
             img.thumbnail(target_size, Image.LANCZOS)
-            img.save(image_path)
-            print(f"图像已调整大小: {image_path}")
+
+            # 转换为 RGB 模式（确保兼容 JPG 格式）
+            if img.mode != 'RGB':
+                img = img.convert('RGB')
+
+            # 修改文件扩展名为 .jpg
+            new_image_path = os.path.splitext(image_path)[0] + ".jpg"
+
+            # 保存为 JPG 格式
+            img.save(new_image_path, format="JPEG")
+            print(f"图像已调整大小并转换为 JPG: {new_image_path}")
+
+            # 如果原文件不是 JPG，删除原文件
+            if new_image_path != image_path:
+                os.remove(image_path)
     except Exception as e:
         print(f"处理图像时发生错误: {e}")
 
@@ -22,8 +35,8 @@ def process_folder(folder_path):
         for file in files:
             if file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
                 image_path = os.path.join(root, file)
-                resize_to_1080p(image_path)
+                resize_and_convert_to_jpg(image_path)
 
 if __name__ == "__main__":
-    folder_path = r"E:\School\R\Robocon\垃圾桶\数据集"
+    folder_path = r"datasets\images\train"
     process_folder(folder_path)

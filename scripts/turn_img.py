@@ -25,5 +25,5 @@ def process_folder(folder_path):
                 rotate_to_landscape(image_path)
 
 if __name__ == "__main__":
-    folder_path = "E:\School\R\Robocon\垃圾桶\数据集"
+    folder_path = "datasets\images\\train"
     process_folder(folder_path)
